@@ -18,7 +18,7 @@
 }
 .truck-body {
   width: 95%;
-  height: 40vh;
+  height: 400px;
   background-color: #ccc;
   position: relative;
 }
@@ -182,14 +182,10 @@
 
 
 @media (max-width: 768px) {
-  .truck-container {
-    height: 70vh;
-    background-color: #f0f0f0;
-  }
 
   .cabin{
-    width:6%;
-    height: 50vh;
+    width:2%;
+    height: 90%;
   }
 
   .add-button {
@@ -203,6 +199,7 @@
 
   .driver-side, .passenger-side {
       height: 50%; /* Maintain height ratio */
+      width:600px
   }
 
   .label {
