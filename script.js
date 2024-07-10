@@ -64,7 +64,7 @@ document.addEventListener('DOMContentLoaded', () => {
               showInfoDiv.appendChild(infoBox);
           });
       } else {
-          showInfoDiv.innerHTML = '<p>No information available for this section.</p>';
+          showInfoDiv.innerHTML = '<p> To view deliveries, click on the driver or passenger side of the truck</p>';
       }
   }
 
