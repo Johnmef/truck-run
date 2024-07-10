@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Truck Design</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  
+
+<div class="truck-container">
+    <div class="cabin"></div>
+    <div class="truck-body">
+        <div class="driver-side">
+            <div class="side" id="driver-side-1"><span class="label">D1</span><button class="add-button">+</button></div>
+            <div class="side" id="driver-side-2"><span class="label">D2</span><button class="add-button">+</button></div>
+            <div class="side" id="driver-side-3"><span class="label">D3</span><button class="add-button">+</button></div>
+            <div class="side" id="driver-side-4"><span class="label">D4</span><button class="add-button">+</button></div>
+            <div class="side" id="driver-side-5"><span class="label">D5</span><button class="add-button">+</button></div>
+            <div class="side" id="driver-side-6"><span class="label">D6</span><button class="add-button">+</button></div>
+            <div class="side" id="driver-side-7"><span class="label">D7</span><button class="add-button">+</button></div>
+        </div>
+        <div class="passenger-side">
+            <div class="side" id="passenger-side-1"><span class="label">P1</span><button class="add-button">+</button></div>
+            <div class="side" id="passenger-side-2"><span class="label">P2</span><button class="add-button">+</button></div>
+            <div class="side" id="passenger-side-3"><span class="label">P3</span><button class="add-button">+</button></div>
+            <div class="side" id="passenger-side-4"><span class="label">P4</span><button class="add-button">+</button></div>
+            <div class="side" id="passenger-side-5"><span class="label">P5</span><button class="add-button">+</button></div>
+            <div class="side" id="passenger-side-6"><span class="label">P6</span><button class="add-button">+</button></div>
+            <div class="side" id="passenger-side-7"><span class="label">P7</span><button class="add-button">+</button></div>
+        </div>
+    </div>
+  
+  
+</div>
+  <div class="show-info">
+    <!-- This div will display customer information -->
+</div>
+  
+
+<div class="form-container" id="form-container">
+    <form id="info-form">
+        <label for="customer-name">Customer Name (required):</label>
+        <input type="text" id="customer-name" name="customer-name" required>
+        <label for="time">Time (optional):</label>
+        <input type="text" id="time" name="time">
+        <label for="notes">Notes (optional):</label>
+        <input type="text" id="notes" name="notes">
+        <input type="hidden" id="target-div">
+        <button type="submit">Add</button>
+    </form>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
