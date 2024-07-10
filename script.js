@@ -71,7 +71,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // Function to add customer information
   function addInfo(targetDiv, customerName, time, notes) {
       const initial = document.createElement('div');
-      initial.textContent = customerName.charAt(0);
+      initial.textContent = customerName.toUpperCase().charAt(0);
       initial.classList.add('initial');
 
       const info = document.createElement('div');
