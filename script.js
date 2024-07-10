@@ -1,171 +1,208 @@
-document.addEventListener('DOMContentLoaded', () => {
-  const formContainer = document.getElementById('form-container');
-  const form = document.getElementById('info-form');
-  const targetDivInput = document.getElementById('target-div');
-  const showInfoDiv = document.querySelector('.show-info');
+/* Responsive styles */
 
-  // Function to add info to localStorage
-  function addToLocalStorage(key, data) {
-      let storedData = localStorage.getItem(key);
-      if (!storedData) {
-          storedData = [];
-      } else {
-          storedData = JSON.parse(storedData);
-      }
-      storedData.push(data);
-      localStorage.setItem(key, JSON.stringify(storedData));
+
+/* Original styles */
+.truck-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 50vh;
+  background-color: #f0f0f0;
+}
+.cabin{
+  width:7%;
+  height: 400px;
+  background-color: grey;
+  position: relative;
+  border-radius: 45% 0 0 45%;
+}
+.truck-body {
+  width: 95%;
+  height: 400px;
+  background-color: #ccc;
+  position: relative;
+}
+
+.driver-side, .passenger-side {
+  display: flex;
+  width: 100%;
+  height: 50%;
+  border-bottom: 1px solid #888;
+}
+
+.passenger-side {
+  border-bottom: none;
+}
+
+.side {
+  width: calc(100% / 7);
+  border-right: 1px solid #888;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  flex-direction: column;
+  position: relative;
+
+}
+
+
+.side:last-child {
+  border-right: none;
+}
+.side:hover {
+  background-color: #c2bebe;
+}
+
+.info-display {
+  /* Styles for the info display section */
+  display: none;
+  margin-top: 20px;
+}
+
+.add-button {
+  background-color: #4CAF50;
+  border: none;
+  color: white;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 2px;
+  cursor: pointer;
+  border-radius: 50%;
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+}
+.label {
+  position: absolute;
+  top: 5px;
+  left: 5px;
+  font-weight: bold;
+  font-size: 12px;
+  color: #333;
+  z-index: 10; /* Ensure labels are above buttons */
+}
+
+.form-container {
+  background-color: white;
+  width: 300px;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+  margin-top: 20px;
+  display: none;
+  flex-direction: column;
+  align-items: center;
+}
+
+.form-container label {
+  font-size: 14px;
+  color: #555;
+  display: block;
+  margin-bottom: 8px;
+}
+
+.form-container input[type="text"],
+.form-container input[type="password"] {
+  width: calc(100% - 16px);
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-family: 'Roboto', sans-serif;
+  font-size: 14px;
+  color: #555;
+  outline: none;
+  margin-bottom: 10px;
+}
+
+.form-container input[type="text"]:focus,
+.form-container input[type="password"]:focus {
+  border-color: #007bff;
+}
+
+.form-container button {
+  width: 100%;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  font-family: 'Roboto', sans-serif;
+  font-weight: 600;
+  font-size: 16px;
+  color: white;
+  background-color: #007bff;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.form-container button:hover {
+  background-color: #0056b3;
+}
+
+.initial {
+  font-size: 2em;
+  font-weight: bold;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 1; /* Ensure initials are above buttons */
+}
+
+.info {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  text-align: center;
+  background-color: rgba(255, 255, 255, 0.8);
+  z-index: 1; /* Ensure info is above buttons */
+}
+
+.info .customer-name {
+  font-weight: bold;
+}
+
+.info .time {
+  font-size: 0.8em;
+}
+
+.close-button {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  cursor: pointer;
+  color: #888;
+  font-size: 16px;
+  background: none;
+  border: none;
+  padding: 0;
+  z-index: 1; /* Ensure close button is above buttons */
+}
+
+
+@media (max-width: 768px) {
+
+  .cabin{
+    width:2%;
+    height: 90%;
   }
 
-  // Function to retrieve info from localStorage
-  function getFromLocalStorage(key) {
-      const storedData = localStorage.getItem(key);
-      return storedData ? JSON.parse(storedData) : [];
+  .add-button {
+      padding: 5px 15px; /* Adjust button padding for smaller screens */
+      font-size: 15px; /* Reduce font size for buttons */
   }
 
-  // Function to display initial labels (D1 to D7, P1 to P7)
-  function displayInitialLabels() {
-      const driverSideDivs = document.querySelectorAll('.driver-side .side');
-      const passengerSideDivs = document.querySelectorAll('.passenger-side .side');
-
-      driverSideDivs.forEach((div, index) => {
-          const label = document.createElement('span');
-          label.textContent = `D${index + 1}`;
-          label.classList.add('label');
-          div.appendChild(label);
-          div.addEventListener('click', () => displayInfo(div.id));
-      });
-
-      passengerSideDivs.forEach((div, index) => {
-          const label = document.createElement('span');
-          label.textContent = `P${index + 1}`;
-          label.classList.add('label');
-          div.appendChild(label);
-          div.addEventListener('click', () => displayInfo(div.id));
-      });
+  .truck-body {
+      height: 90%; /* Adjust height for smaller screens */
   }
 
-  // Function to display customer information in show-info area
-  function displayInfo(divId) {
-      showInfoDiv.innerHTML = ''; // Clear previous content
-
-      const storedData = getFromLocalStorage(divId);
-      if (storedData.length > 0) {
-          storedData.forEach(item => {
-              const infoBox = document.createElement('div');
-              infoBox.classList.add('info-box');
-              infoBox.innerHTML = `<div><strong>Customer Name:</strong> ${item.customerName}</div>`;
-              if (item.time) {
-                  infoBox.innerHTML += `<div><strong>Time:</strong> ${item.time}</div>`;
-              }
-              if (item.notes) {
-                  infoBox.innerHTML += `<div><strong>Notes:</strong> ${item.notes}</div>`;
-              }
-
-              showInfoDiv.appendChild(infoBox);
-          });
-      } else {
-          showInfoDiv.innerHTML = '<p>No information available for this section.</p>';
-      }
+  .driver-side, .passenger-side {
+      height: 50%; /* Maintain height ratio */
+      width:600px
   }
 
-  // Function to add customer information
-  function addInfo(targetDiv, customerName, time, notes) {
-      const initial = document.createElement('div');
-      initial.textContent = customerName.charAt(0);
-      initial.classList.add('initial');
-
-      const info = document.createElement('div');
-      info.classList.add('info');
-      info.innerHTML = `<div class="customer-name">${customerName}</div><div class="time">${time}</div>`;
-
-      const closeButton = document.createElement('button');
-      closeButton.textContent = 'X';
-      closeButton.classList.add('close-button');
-      closeButton.addEventListener('click', () => {
-          targetDiv.removeChild(initial);
-          targetDiv.removeChild(info);
-          targetDiv.removeChild(closeButton);
-          targetDiv.innerHTML += '<button class="add-button">+</button>'; // Add '+' button again
-          targetDiv.querySelector('.add-button').addEventListener('click', handleAddButtonClick);
-
-          // Remove from localStorage
-          const targetId = targetDiv.id;
-          const storedData = getFromLocalStorage(targetId);
-          const newData = storedData.filter(item => !(item.customerName === customerName && item.time === time && item.notes === notes));
-          localStorage.setItem(targetId, JSON.stringify(newData));
-
-          // Clear show-info on removal
-          showInfoDiv.innerHTML = '';
-      });
-
-      targetDiv.appendChild(initial);
-      targetDiv.appendChild(info);
-      targetDiv.appendChild(closeButton);
-
-      // Add to localStorage
-      addToLocalStorage(targetDiv.id, { customerName, time, notes });
-
-      // Remove the '+' button
-      const addButton = targetDiv.querySelector('.add-button');
-      if (addButton) {
-          addButton.remove();
-      }
+  .label {
+      font-size: 10px; /* Reduce label font size */
   }
-
-  // Event listener for handling button click to add customer information
-  function handleAddButtonClick(event) {
-      event.preventDefault();
-      const targetDiv = event.target.parentElement;
-      targetDivInput.value = targetDiv.id;
-      formContainer.style.display = 'flex';
-
-      // Scroll to the form container
-      formContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  }
-
-  // Event listener for form submission to add customer information
-  form.addEventListener('submit', (event) => {
-      event.preventDefault();
-      const customerName = document.getElementById('customer-name').value;
-      const time = document.getElementById('time').value;
-      const notes = document.getElementById('notes').value;
-      const targetDivId = targetDivInput.value;
-      const targetDiv = document.getElementById(targetDivId);
-
-      addInfo(targetDiv, customerName, time, notes);
-
-      // Reset form and hide it
-      form.reset();
-      formContainer.style.display = 'none';
-  });
-
-  // Load existing data from localStorage on page load
-  function loadFromLocalStorage() {
-      const driverSideDivs = document.querySelectorAll('.driver-side .side');
-      const passengerSideDivs = document.querySelectorAll('.passenger-side .side');
-
-      driverSideDivs.forEach(div => {
-          const storedData = getFromLocalStorage(div.id);
-          storedData.forEach(item => {
-              addInfo(div, item.customerName, item.time, item.notes);
-          });
-      });
-
-      passengerSideDivs.forEach(div => {
-          const storedData = getFromLocalStorage(div.id);
-          storedData.forEach(item => {
-              addInfo(div, item.customerName, item.time, item.notes);
-          });
-      });
-  }
-
-  // Initialize the page
-  displayInitialLabels();
-  loadFromLocalStorage();
-
-  // Event listeners for add buttons
-  const addButtons = document.querySelectorAll('.add-button');
-  addButtons.forEach(button => {
-      button.addEventListener('click', handleAddButtonClick);
-  });
-});
+}
